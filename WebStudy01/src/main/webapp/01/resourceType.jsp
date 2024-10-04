@@ -8,8 +8,11 @@
 </head>
 <body>
 
+<h4> <%=application.hashCode() %> </h4>
+<h4> contextParam1:<%=application.getInitParameter("contextParam1") %> </h4>
 <h4> 자원의 분류 </h4>
 <pre>
+ 자원의 분류
 	1. 자원의 생성 시점과 서비스 대상에 따른 분류.
 		1) 정적 자원 : 서버가 구성되기 전에 이미 생성되어 있는 파일,
 					  파일 자체가 서비스 대상이 되는 컨텐츠
