@@ -50,8 +50,6 @@ import javax.servlet.http.HttpServletResponse;
  *	 		3.X version : @WebServlet(url) [싱글벨류 어노테이션]
  *  						@WebServlet(url,//) [멀티벨류 어노테이션]
  *  
- *  
- *  
  *  4. 컨테이너 리로드
  * 
  * *** 서블릿 스펙에서 제공되는 객체

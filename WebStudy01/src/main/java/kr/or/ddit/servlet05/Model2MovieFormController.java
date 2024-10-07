@@ -1,4 +1,4 @@
-package kr.or.ddit.servlet03;
+package kr.or.ddit.servlet05;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,11 +10,14 @@ import java.util.stream.Stream;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class ImageFormServlet extends HttpServlet{
+
+@WebServlet(value="/movie/model2/formUI.hw",loadOnStartup = 1)
+public class Model2MovieFormController extends HttpServlet{
 	private File folder;
 	private ServletContext application;
 	//web.xml에서 선언한 값[파일 경로]을 가져오기 위한 전역변수.
@@ -34,7 +37,7 @@ public class ImageFormServlet extends HttpServlet{
 		//그렇기에 init 메소드에서 얻은 후에 전역변수로 관리한다.
 		
 		//자바 API로 널포인트에 안전한 코드 만들기
-		// 널 일수도 있음	folderQN을 qn으로 화살표함수 - 자바 남다
+		// 널 일수도 있음	folderQN을 qn으로 화살표함수 - 자바 남다 형식
 		
 		/*
 		 * 널 일수도 있는 app객체의 folderQN이라는 값을 가져온다.
@@ -42,12 +45,17 @@ public class ImageFormServlet extends HttpServlet{
 		 * 절대경로. 즉 url이라는 변수를 생성하고 url의 경로에 해당하는 곳의 File 정보들을 가져온다.
 		 * File정보들이 담긴 rp라는 변수로 자바에서 새로운 File 객체를 생성한다 new File(rp)
 		 * 
+		 * 단, 실제로 저장된 D/C 드라이브와도 같은 물리적 경로를 통해 File을 가져올려고 할 때는
+		 * Server 내부의 url을 통한 논리적 주소로 탐색을 하지 않아도 된다.
+		 * File의 위치값으로 D:/00.medias/movies 와 같은 실제 물리적 주소를 부여하면
+		 * 해당 주소에 존재하는 동영상 파일들 유무의 체크가 가능하다.
+		 * 
 		 * 이러면 해당 경로에 존재하는 파일에 대한 null체크가 끝
 		 * 
 		 */
-		folder= Optional.ofNullable(application.getInitParameter("imageFolderQN"))
-						.map(qn->this.getClass().getResource(qn))
-						.map(url->url.getFile())
+		System.out.println(application.getInitParameter("movieFolder"));
+		
+		folder= Optional.ofNullable(application.getInitParameter("movieFolder"))
 						.map(rp->new File(rp))
 						.orElseThrow(()->new ServletException("폴더가 존재하지 않습니다."));
 			
@@ -74,14 +82,17 @@ public class ImageFormServlet extends HttpServlet{
 		 * 
 		 * d는 디렉토리 n은 파일명. app.getMimeType(n)으로 파일명에 존재하는 확장자,
 		 * MimeType을 찾아낸다. 이 Mime의 값을 m이라는 변수로 지정하고
-		 * m, 즉 MimeType이 startWith("image/") , image/로 시작하는 파일들만
+		 * 비디오의 MimeType의 시작은 video/ 임을 이용하여
+		 * m, 즉 MimeType이 startWith("video/") , video/로 시작하는 파일들만
 		 * filesNames 배열에 담는다. 
+		 * 이러면 같은 폴더 안에 존재하는 image나 text 등의 다른 MimeType 파일들은 모두 패스하고
+		 * mp4, 비디오 파일만 String 배열에 담는다.
 		 * 
 		 */
 		
 		
 		String[] fileNames = folder.list((d,n)->Optional.ofNullable(application.getMimeType(n))
-												.map(m->m.startsWith("image/"))
+												.map(m->m.startsWith("video/"))
 												.orElse(false)
 				);
 		
@@ -105,24 +116,10 @@ public class ImageFormServlet extends HttpServlet{
 							   .map(n->String.format(pattern,n))
 							   .collect(Collectors.joining("\n"));
 		
-//		                                                            
-		StringBuffer html = new StringBuffer();
-		html.append("<html>                                       " );  
-		html.append("<body>                                       " );  
-		html.append("<form method='get' action='./streaming.hw'>  " ); 
-		// onchange='this.form.submit()
-		// select 요소에 change가 발생하면 그에 해당하는 값을 form을 이용해 submit. 서블릿으로 보낸다.
-		html.append("<select name='image' onchange='this.form.submit()'> " );  
-		html.append(options);  
-		html.append("</select>                       " );  
-		html.append("</form>		                              " );  
-		html.append("</body>                                      " );  
-		html.append("</html>                                      " );  
+		//만든 options 값을 그대로 formUI.jsp에 전송
+		req.setAttribute("options", options);
 		
-		resp.setContentType("text/html;charset=utf-8");
-		
-		resp.getWriter().print(html);
-		
+		req.getRequestDispatcher("/WEB-INF/views/movie/formUI.jsp").forward(req, resp);
 		
 	}
 }
