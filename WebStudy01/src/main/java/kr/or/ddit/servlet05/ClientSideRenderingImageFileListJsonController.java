@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-@WebServlet(value="/movie/csr/imagefileList",loadOnStartup = 1)
+@WebServlet(value="/image/csr/imagefileList",loadOnStartup = 1)
 public class ClientSideRenderingImageFileListJsonController extends HttpServlet{
 	private File folder;
 	private ServletContext application;
@@ -53,11 +53,8 @@ public class ClientSideRenderingImageFileListJsonController extends HttpServlet{
 		
 		System.out.println(fileNames);
 		
-		
-		
 		//자바 8버전에서는 스트림이라는 반복문을 사용
 		//sugar syntax 코드를 간결하게 짜는 경향.
-		
 		
 		String pattern="\"%s\"";
 

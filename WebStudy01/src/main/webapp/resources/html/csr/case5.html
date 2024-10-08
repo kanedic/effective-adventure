@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="../../css/csr/case5.css" />
+</head>
+<body>
+<!-- 원본 <form method='get' action='../../../movie/streaming.hw'> -->
+<!-- <select name='movie' onchange='this.form.submit()'> -->
+
+<h4> ClientSideRenderingALLFileListJsonController.java 서블릿으로 리스트</h4>
+<h4> case4.js의 movieOrImage 구문</h4>
+<h4> movieOrImage.java 의 서블렛에서 image출력 / video 이동</h4>
+<h4> package4의 MovieStreamingServlet.java 에서 영상출력</h4>
+<form method='get' action='../../../movieOrImage.hw' data-role="movie" data-target-area="#movie-area" >
+<select name='movieOrImage' onchange='this.form.requestSubmit()' required>
+<!-- required 필수 파라미터의 값이 누락되면 실행을 금지. -->
+	<option value>영상 선택</option>
+</select>
+</FORM>	
+
+
+<form  method='get' action='../../../image/streaming.hw' data-role="image" data-target-area="#image-area" >
+<select name='image' onchange='this.form.requestSubmit()' required>
+	<option value>이미지 선택</option>
+
+</select>
+</form>	
+<div id="movie-area"></div>
+<div id="image-area"></div>
+
+<script type="text/javascript" src="../../js/app/csr/case5.js"></script>
+
+
+</body>
+</html>
