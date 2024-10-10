@@ -25,8 +25,6 @@ public class YGServlet extends HttpServlet{
 
 	@Override
 	public void init() throws ServletException {
-	
-		
 		super.init();
 	
 		application = getServletContext();
@@ -70,8 +68,6 @@ public class YGServlet extends HttpServlet{
 								}
 							})
 							.collect(Collectors.joining("\n"));
-			
-			
 			out.println(html);
 		}
 	
