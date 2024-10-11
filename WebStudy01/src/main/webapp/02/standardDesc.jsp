@@ -41,12 +41,12 @@ HOW : 정적인 템플릿 요솔르 제외한 동적 요소를 작성하는 방�
  					page (required) : 웹 페이지 자체의 설정에 영향을 끼치는 설정
  					include (optional) : 정적 내포
  					taglib (optional) : custom tag 사용시 필요
- 	4) declaration: 클래스 차원의 전역 코드로 전환되는 자바 코드.
+ 	4) declaration: 클래스 차원의 전역 코드로 전환되는 자바 코드. 선언부
  	 <%! 
 						//전역코드로 변수 선언
 						String data="데이터"; 
 
-					%>
+	 %>
  	5) comment    : <%-- 주석 --%>
  		-back end comment: (***) : java,jsp의 주석
  		-front end comment: (XXX) : HTML,CSS,JS의 주석
@@ -61,7 +61,7 @@ HOW : 정적인 템플릿 요솔르 제외한 동적 요소를 작성하는 방�
  	
  	
  	
-	6) EL(Expression ianguage)
+	6) EL(Expression language)
 	7) Custom tag (JSTL)
 
 
