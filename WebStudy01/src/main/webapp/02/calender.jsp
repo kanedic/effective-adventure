@@ -80,7 +80,7 @@
 </head>
 <body>
 폼테그와 a태그의 요청 3개를 비동기로 
-<form name="calForm" onchange="this.requestSubmit();" method="post">
+<form name="calForm" onchange="this.requestSubmit();" method="get">
 	<input type="number" name="year"  />
 	<select name="month" >
 <!-- 		//ENUM 자신 타입의 객체. ENUM 생성자를 외부에서 호출불가 month안의 상수는 배열로 관리됨 -->
@@ -181,6 +181,8 @@
 	calForm.locale.value="<%=locale.toLanguageTag()%>";
 	calForm.locale.zone="<%=zone.getId()%>";
 	
+	//제일 중요한 부분
+	//a태그의 이벤트의 흐름을 한곳으로 제한함 
 	document.querySelectorAll(".link-a").forEach(a=>{
 		a.addEventListener("click",e=>{
 			calForm.year.value = a.dataset.year
