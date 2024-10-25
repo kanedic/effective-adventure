@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="log-area"></div>
+    
+    <script>
+        const logArea = document.getElementById("log-area");
+        function log(message){
+            // logArea.insertAdjacentHTML("beforeend",`<p>${message}</p>`);
+            console.log(message)
+        }
+        //case4 : async 키워드를 이용한 비동기 처리 구조 (묵시적으로 생성되는 Promise 객체)
+        executor: (resolve,reject)=>{ //2개의 함수 레퍼런스
+            // lazy loding 함수 표현
+            // if(성공) resolve(lazy load data)
+            // else reject(error)
+        } 
+        // new Promise(executor);
+        
+        function fnStep1(){
+            log("STEP1");
+        }
+        function fnStep2(){
+            log("STEP2");
+        }
+        function fnStep3(){
+            log("STEP3");
+        }
+        
+        //template method pattern /
+        async function fnTemplate(fnHook){// 문제의 해결을 위한 패턴 = 디자인 패턴
+            fnStep1();
+            fnStep2();
+
+            try {
+                let result =await fnHook() //case 4 promise객체 반환 비동기가 동기적인 절차구조를 가지게해주는 await
+                log(result)
+            } catch (err) {
+                console.error(err)
+            } finally{
+                log("최종 마무리 작업");
+            };
+             
+            fnStep3();
+        }
+        //async 자동으로 Promise 객체 생성
+        async function fnMiddle(){
+            let startTime = new Date().getTime()
+            while(new Date().getTime()<(startTime+3000)){
+
+            }
+            let intNum = Math.trunc(Math.random()*100)
+            if(intNum%2==0){
+                let result = `${intNum} 이 짝수라 성공!` 
+                return result
+            }else{
+                throw err = new Error(`${intNum} 이 홀수라 실패`);            
+            }
+        }
+        fnTemplate(fnMiddle);
+    </script>
+</body>
+</html>

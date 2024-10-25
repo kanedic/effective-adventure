@@ -43,7 +43,9 @@
 				key3 (body) : <%=request.getParameter("key3") %>
 				
 				
-		2) 멀티파트 form-data : 
+		2) 멀티파트 form-data : <a href="<%=request.getContextPath()%>/03/multipartDesc.jsp">Multipart Content</a> 
+		
+		
 		3) json[xml] payload: <a href="<%=request.getContextPath()%>/03/jsonAndRest.jsp">JSON and REST</a>
 
 자원의 출처 오리진

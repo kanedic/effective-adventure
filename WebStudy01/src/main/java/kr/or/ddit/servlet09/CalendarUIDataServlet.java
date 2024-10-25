@@ -25,6 +25,7 @@ public class CalendarUIDataServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //		Locale locale = Locale.getDefault();
+		System.out.println("〓〓〓〓〓〓〓〓〓〓〓〓〓캐싱 데이터 사용하지 않고 있음.〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓");
 		Locale locale = req.getLocale();
 		
 		
@@ -33,7 +34,6 @@ public class CalendarUIDataServlet extends HttpServlet{
 								  .map(m->m.getDisplayName(FULL, locale))
 								  .toArray(String[]::new));
 		
-		ObjectWriter mapper = new ObjectMapper().writerWithDefaultPrettyPrinter();
 		
 		
 		Map<String, String> locales= Arrays.stream(Locale.getAvailableLocales())
@@ -45,10 +45,12 @@ public class CalendarUIDataServlet extends HttpServlet{
 		
 		Map<String, String> zones= ZoneId.getAvailableZoneIds().stream()
 										 .collect(Collectors.toMap(zid->zid, zid->ZoneId.of(zid).getDisplayName(FULL, locale)));
-		
-		resp.setContentType("application/json;charset=utf-8");
-		
 		target.put("zones",zones);
+
+		resp.setContentType("application/json;charset=utf-8");
+		resp.setHeader("cache-control", "private,max-age="+10);
+		
+		ObjectWriter mapper = new ObjectMapper().writerWithDefaultPrettyPrinter();
 		mapper.writeValue(resp.getWriter(), target);
 		
 	}

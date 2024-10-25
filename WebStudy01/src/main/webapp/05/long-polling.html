@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+
+	.invisible{
+		display: none;
+	}
+</style>
+</head>
+<body>
+1. 스케쥴링 롤폴링
+2. 자바스크립트의 객체구조
+3. 자바 스크립트 객체구조의 클래스
+<h3> 클라이언트의 시간 </h3>
+<div class="has-watch"></div>
+<div class="has-watch"></div>
+<div class="has-watch"></div>
+<button id="stop-btn" > 중지 </button>
+<button id="resume-btn" class="invisible"> RESUME </button>
+<br>
+<hr>
+<br>
+
+<h3> 서버의 시간 </h3>
+<div class="has-watch" data-wl-url="getServerTime.jsp"></div>
+<select id="zone">
+	
+
+</select>
+<script type="text/javascript" src="../resources/js/app/05/watchLib.js"></script>
+<script type="text/javascript" src="../resources/js/app/05/long-polling.js"></script>
+<!-- <script type="text/javascript" src="../경로 구하는 날먹법 단, html에서만"></script> -->
+</body>
+</html>

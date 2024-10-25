@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="resultArea"></div>
+    <button id="lazyBtn">데이터 로드</button>
+    
+    <button id="lazyBtnAsync">ASYNC 데이터 로드</button>
+    <script>
+        lazyBtnAsync.onclick = async function () { //resp 자체를 반환받고싶음
+            try {
+                let resp = await fetch("./data/dummy.json") //기본 fatch의 첫 then 구조
+
+                if (resp.ok) {
+                    let { prop, number } = await resp.json(); // 변수 2개 선언해서 받은거랑 똑같음
+                    resultArea.innerHTML = `prop : ${prop}  number : ${number}`
+                } else {
+                    throw new Error(`cODE : ${resp.status}`)
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        lazyBtn.onclick = function () {
+            let promise = fetch("./data/dummy.json") //promise가 반환됨
+            console.log(promise)
+            promise.then(resp => {
+                if (resp.ok) {
+                    let innerPromise = resp.json();
+                    console.log("in then function : ", innerPromise)
+                    return innerPromise;
+                } else {
+                    throw new Error(`cODE : ${resp.status}`)
+                }
+            }).then(({ prop, number }) => resultArea.innerHTML = `prop : ${prop}  number : ${number}`)
+                .catch(console.error)
+        }   
+    </script>
+</body>
+
+</html>

@@ -31,7 +31,7 @@ const fnInit =()=>{
 		
 //		insertAdjacentHTML("",html);
 		//프로퍼티의 이름 
-		makeOption(calForm.locale,locales);
+		(calForm.locale,locales);
 		makeOption(calForm.zone,zones);
 //		for(let pn in locales){ //연관배열구조로 내부접근
 //			   let pv = locales[pn]; //프로퍼티의 밸류

@@ -30,18 +30,24 @@ public class CalcuateServlet extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-	double left=Optional.of(req.getParameter("left"))
-						.map(Double::parseDouble)
-						.get();//예외가 알아서 만들어짐
+	resp.setCharacterEncoding("text/html;charset=utf-8");
+	resp.setContentType("utf-8");
 
-	double right=Optional.of(req.getParameter("right"))
+	try{
+	double left=Optional.of(req.getParameter("left"))
 			.map(Double::parseDouble)
-			.get();//예외가 알아서 만들어짐
+			.orElseThrow(()->new NullPointerException());		
+		
+	
+	double right=Optional.of(req.getParameter("right"))
+						 .map(Double::parseDouble)
+						 .get();//예외가 알아서 만들어짐
 		
 	OperatorType operator=	Optional.of(req.getParameter("operator"))
 									.map(OperatorType::valueOf)
 									.get();
+	
+	// 값이 넘어왔을 때 유효하지 않은 값이면 적절한 400에러 출력
 		
 	CalculateVO calVo = new CalculateVO();
 	
@@ -53,6 +59,10 @@ public class CalcuateServlet extends HttpServlet {
 		
 	new ObjectMapper().writeValue(resp.getWriter(), calVo);
 	
+	}catch (IllegalArgumentException e) {
+		resp.sendError(HttpServletResponse.SC_BAD_REQUEST,e.getMessage());
+		return;
+	}	
 		
 	}
 }

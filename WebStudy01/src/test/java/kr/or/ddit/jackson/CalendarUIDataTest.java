@@ -44,6 +44,7 @@ class CalendarUIDataTest {
 	
 	ObjectWriter mapper = new ObjectMapper().writerWithDefaultPrettyPrinter();
 	
+	
 	Map<String, String> locales= Arrays.stream(Locale.getAvailableLocales())
 								   	   .filter(l->!l.getDisplayName().isEmpty())
 								  	   .collect(Collectors.toMap(Locale::toLanguageTag, l->l.getDisplayName(l)));
