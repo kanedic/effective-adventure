@@ -8,3 +8,10 @@ incloud 로 작업하면 모듈 부분에서도 jquery등의 외부 호출을 �
 <script>
 	$()
 </script>
+<pre>
+<%
+			out.println(request.getAttribute("requestAttr")    );
+			out.println(session.getAttribute("sessionAttr")    );
+			out.println(application.getAttribute("applicationAttr"));
+%>
+</pre>

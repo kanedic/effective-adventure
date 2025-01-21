@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.jasper.tagplugins.jstl.core.Out;
+
 
 //@WebServlet("/image/formUI.hw") 이부분 겹쳐서 오류뜬거임
 public class FormUI extends HttpServlet {

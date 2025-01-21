@@ -25,6 +25,11 @@
 //		RequestDispatcher rd= request.getRequestDispatcher("/06/dest.jsp");
 // 		rd.forward(request, response); //기존의 요청과 응답을 가져감
 		rd.include(request, response); //기존의 요청과 응답을 가져감	--%>
+		<%
+			request.setAttribute("requestAttr", "요청 속성");
+			session.setAttribute("sessionAttr", "세션 속성");
+			application.setAttribute("applicationAttr", "어플리케이션 속성");
+		%>
 <%-- 	<jsp:forward page="/06/dest.jsp"></jsp:forward> --%>
 <%-- 		<jsp:include page="/06/dest.jsp"/> 액션태그 --%>
 		
@@ -36,10 +41,10 @@
 		3) Location 헤더 방향으로 새로운 요청이 전송됨
 		4) 최종 응답 전송
 		
-		<%--//로케이션 헤더의 주소를 주어야함
+		<%//로케이션 헤더의 주소를 주어야함
 		String location = request.getContextPath()+"/06/dest.jsp";
 			response.sendRedirect(location);
-		--%>
+		%>
 		
 </pre>
 

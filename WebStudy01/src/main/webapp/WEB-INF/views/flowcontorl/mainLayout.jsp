@@ -6,6 +6,11 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="<%=request.getContextPath() %>/resources/bootstrap-5.3.3-dist/css/bootstrap.min.css"/>
+<style type="text/css">
+	#new-name:{
+		background-color: yellow;
+	}
+</style>
 </head>
 <body>
 

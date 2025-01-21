@@ -41,8 +41,7 @@ public class BtnServlet extends HttpServlet{
 		btnMap.put("sugar","슈가");
 		
 	application = getServletContext(); //서블릿과 대화하기 위한 경로
-	///WebStudy01/src/main/webapp/WEB-INF/views/bts
-    String realPath = application.getRealPath("/WEB-INF/views/bts");//논리 경로를 입력하면 실제 경로를 반환함.
+	 String realPath = application.getRealPath("/WEB-INF/views/bts");//논리 경로를 입력하면 실제 경로를 반환함.
     btnFolderPath = Paths.get(realPath);//mbti 폴더
 	
 	}
@@ -91,11 +90,6 @@ public class BtnServlet extends HttpServlet{
 			resp.sendError(400);
 			return;
 		}
-		System.out.println("싱글2");
-		///WebStudy01/src/main/webapp/WEB-INF/views/bts
-		///WebStudy01/src/main/webapp/WEB-INF/views/bts/jimin.jsp
-//		req.getRequestDispatcher("/WEB-INF/views/bts/"+member+".jsp").forward(req, resp);
-		///WebStudy01/src/main/webapp/WEB-INF/views/bts/jhop.jsp
 		resp.sendRedirect(req.getContextPath()+"/views/bts/"+member+".jsp");
 		
 		

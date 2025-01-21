@@ -58,6 +58,7 @@
     
 
 
+<h1>현재 인증된 사용자 : <%=request.getUserPrincipal() %></h1>
 <h1>현재 시간 <%=LocalDateTime.now(zone) %></h1>
 <h1>
 <a href="javascript:void(0);" class="link-a" data-year="<%=beforeYM.getYear() %>" data-month=<%=beforeYM.getMonthValue()%>> ◀◀◀ </a>

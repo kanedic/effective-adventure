@@ -10,6 +10,20 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+/**
+ * 컨트롤러의 작업 단계
+ * 1.요청을 접수 , 분석 → line , headers , body의 데이터 분석
+ * 2.model 생성 (Information)
+ * 3.model 전달 (setAttribute, 저장)
+ * 4.view를 선택하고 , 이동(forward / redirect)
+ * 
+ * view의 작업 단계
+ * 1. 저장된 model확보 (getAttribute , down casting)
+ * 2. UI(컨텐츠 생성)
+ */
+
 
 @WebServlet("/flowcontrol")
 public class Model2ControllerServlet extends HttpServlet{
@@ -46,10 +60,12 @@ public class Model2ControllerServlet extends HttpServlet{
 			errors.put("value","레시피 설명 누락");
 		}
 		
+		
 		if(valid) {
+			HttpSession session = req.getSession();
+			session.setAttribute("new-menu", name);
 			recipe.put(name,text);
 			//Post - Redirct - Get 패턴
-			
 			resp.sendRedirect(req.getContextPath()+"/flowcontrol");
 			
 		}else {			
