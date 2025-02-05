@@ -34,6 +34,8 @@ select
     , b.last_conect_de
 from 
     student a inner join person b on a.stu_id=b.id
+where 
+	a.dormant_date is null
 
 </select>
 

@@ -1,5 +1,7 @@
 package kr.or.ddit.yguniv.batch.controller;
 
+import java.util.Date;
+
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class BatchScheduler {
+	
 	 @Autowired
 	    private JobLauncher jobLauncher;
 	    
@@ -21,10 +24,11 @@ public class BatchScheduler {
 	    	JobParameters jobParameters = new JobParametersBuilder()
 	    			.addLong("time", System.currentTimeMillis())
 	    			.toJobParameters();
-	    	
+	    
 	    	jobLauncher.run(testJob, jobParameters);
 	    }
 
+//	    			.addLong("time", System.currentTimeMillis())
 	    //학생 3개월 시 휴면일자 업데이트
 	    @Autowired
 	    private Job stuDormantJob;
@@ -32,9 +36,13 @@ public class BatchScheduler {
 	    @Scheduled(cron = "0 0 2 * * *") // 매일 새벽 2시에 휴면계정 작업을 실행
 	    public void stuDormantJob() throws Exception {
 	    	JobParameters jobParameters = new JobParametersBuilder()
-	    			.addLong("time", System.currentTimeMillis())
+	    			.addDate("date", new Date())
 	    			.toJobParameters();
 	    	
 	    	jobLauncher.run(stuDormantJob, jobParameters);
+	    
 	    }
+	    
+	    
+	    
 }

@@ -16,27 +16,23 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Configuration
 public class BucketConfig {
-	
 	private Bucket bucket;
-	
-
     @Bean
     public Bucket bucket() {
         int second = 5;
         int token = 3;
         
-        final Refill refill = Refill.intervally(token, Duration.ofSeconds(second));
+        Refill refill = Refill.intervally(token, Duration.ofSeconds(second));
         final Bandwidth limit = Bandwidth.classic(token, refill);
         
-        this.bucket = Bucket.builder()
+        bucket = Bucket.builder()
                 .addLimit(limit)
                 .build();
-        
-        return this.bucket;
+        return bucket;
     }
 
-    public void reloadBucket(int newSecond, int newToken) {
-        final Refill newRefill = Refill.intervally(newToken, Duration.ofSeconds(newSecond));
+    public void reloadBucket(int minute, int newToken) {
+        final Refill newRefill = Refill.intervally(newToken, Duration.ofSeconds(minute));
         final Bandwidth newLimit = Bandwidth.classic(newToken, newRefill);
         
         BucketConfiguration newConfiguration = BucketConfiguration.builder()
@@ -44,7 +40,7 @@ public class BucketConfig {
                 .build();
         
         this.bucket.replaceConfiguration(newConfiguration, TokensInheritanceStrategy.RESET);
-        log.info("버킷 재설정 {}분에  {} 개 만큼 요청 제한",  (newSecond/60), newToken);
+        log.info("버킷 재설정 {}분에  {} 개 만큼 요청 제한",  minute, newToken);
         
     }
 

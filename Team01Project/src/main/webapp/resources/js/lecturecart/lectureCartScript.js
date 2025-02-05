@@ -98,15 +98,27 @@ document.addEventListener("DOMContentLoaded", async () => {
 							render: function(data, type, row) {
 								if (studentLectNos.has(row.lectNo)) {
 									return `
-										<button class="btn btn-secondary" onclick="fnShowLecturePaper('${row.lectNo}')"><i class="bi bi-file-text"></i></button>
-										<button class="btn btn-warning btn-${row.lectNo}" onclick="fnDeleteCart('${row.lectNo}')"><i class="bi bi-bag-dash-fill"></i></button>
-										<button class="btn btn-primary btn-${row.lectNo}" onclick="fnInsertCart('${row.lectNo}')" style="display: none;"><i class="bi bi-bag-plus-fill"></i></button>
+										<button class="btn btn-secondary" onclick="fnShowLecturePaper('${row.lectNo}')">
+											<i class="bi bi-file-text"></i>
+										</button>
+										<button class="btn btn-warning btn-${row.lectNo}" onclick="fnDeleteCart('${row.lectNo}')">
+											<i class="bi bi-bag-dash-fill"></i>
+										</button>
+										<button class="btn btn-primary btn-${row.lectNo}" onclick="fnInsertCart('${row.lectNo}')" style="display: none;">
+											<i class="bi bi-bag-plus-fill"></i>
+										</button>
 									`;
 								} else {
 									return `
-										<button class="btn btn-secondary" onclick="fnShowLecturePaper('${row.lectNo}')"><i class="bi bi-file-text"></i></button>
-										<button class="btn btn-warning btn-${row.lectNo}" onclick="fnDeleteCart('${row.lectNo}')" style="display: none;"><i class="bi bi-bag-dash-fill"></i></button>
-										<button class="btn btn-primary btn-${row.lectNo}" onclick="fnInsertCart('${row.lectNo}')"><i class="bi bi-bag-plus-fill"></i></button>
+										<button class="btn btn-secondary" onclick="fnShowLecturePaper('${row.lectNo}')">
+											<i class="bi bi-file-text"></i>
+										</button>
+										<button class="btn btn-warning btn-${row.lectNo}" onclick="fnDeleteCart('${row.lectNo}')" style="display: none;">
+											<i class="bi bi-bag-dash-fill"></i>
+										</button>
+										<button class="btn btn-primary btn-${row.lectNo}" onclick="fnInsertCart('${row.lectNo}')">
+											<i class="bi bi-bag-plus-fill"></i>
+										</button>
 									`;
 								}
 							}

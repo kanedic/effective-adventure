@@ -52,9 +52,9 @@ public class BatchServiceImpl {
 
 		LocalDate currentDate = LocalDate.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-		LocalDate lastConnectDate = LocalDate.parse(sVo.getLastConectDe(), formatter);
+		LocalDate lastDate = LocalDate.parse(sVo.getLastConectDe(), formatter);
 
-		long monthsBetween = ChronoUnit.MONTHS.between(lastConnectDate, currentDate);
+		long monthsBetween = ChronoUnit.MONTHS.between(lastDate, currentDate);
 
 		log.info("monthsBetween: {}", monthsBetween);
 		if (monthsBetween >= 3) {

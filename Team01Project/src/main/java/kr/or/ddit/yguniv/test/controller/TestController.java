@@ -269,7 +269,7 @@ public class TestController {
 		log.info("＠＠＠＠＠＠＠＠＠＠＠＠＠＠＠＠＠＠＠＠＠＠＠＠＠＠＠＠＠＠＠＠＠＠시험번호 : {} on? no? : {}", testNo, check);
 		String message = ""; 
 		String testCd = "";
-		String notiCd =  NotificationCode.OK+""; //NotificationCode.INFO+"" NotificationCode.WARN+"" 
+		String notiCd =  NotificationCode.OK+""; //NotificationCode.INFO,WARN+""
 		
 		if ("ok".equals(check)) {
 			testCd = "OPEN";
@@ -287,6 +287,7 @@ public class TestController {
 		Map<String, String> body = new HashMap<>();
 		
 		resp.put("ok", "ok");
+		
 		Integer result = service.checkTest(testNo, testCd);
 		if(result>0) {
 			String sendId = prin.getName();
@@ -297,7 +298,7 @@ public class TestController {
 			String url2 = " "; 
 			String head = "시험안내"; 
 			
-			//필요한것 전송자 id , 수신자 List (1명이라도), 내용 본문, 알림코드번호, url(없으면 공백 필수)
+			//필요한것 전송자 id , 수신자 List (1명이라도), 내용 본문, 알림코드번호, url
 			notiService.createAndSendNotification(sendId, stuList, message, notiCd, url,head );
 		}
 		return ResponseEntity.status(status).body(body);

@@ -5,8 +5,8 @@ const url = "../yguniv/dissent"
 const upBtn = document.getElementById("upBtn")
 const selDiv = document.getElementById("selDiv");
 
-	const dataElement = document.getElementById('contextData');
-	const contextPath = dataElement.dataset.contextPath;
+const dataElement = document.getElementById('contextData');
+const contextPath = dataElement.dataset.contextPath;
 function dissentPagg(page) {
 	console.log(page);
 	searchForm.page.value = page;
@@ -17,88 +17,88 @@ document.addEventListener("DOMContentLoaded", async () => {
 	const lectNo = document.getElementById("lectNo").value;
 })
 function calculateTotalScore(lesVo, scores) {
-    let totalScore = 0;
-    lesVo.forEach(item => {
-        let score = 0;
-        switch (item.evlStdrCd) {
-            case "ASS":
-                score = scores.assigScore;
-                break;
-            case "ATT":
-                score = scores.attenAtndScore;
-                break;
-            case "ETC":
-                score = scores.etcScore;
-                break;
-            case "FIN":
-                score = scores.ftTestScore;
-                break;
-            case "MID":
-                score = scores.prTestScore;
-                break;
-            default:
-                console.error("Unknown evaluation standard code:", item.evlStdrCd);
-                return;
-        }
-        totalScore += score * (item.rate / 100);
-    });
-    return Math.round(totalScore * 10) / 10; // 소수점 첫째자리까지 반올림
+	let totalScore = 0;
+	lesVo.forEach(item => {
+		let score = 0;
+		switch (item.evlStdrCd) {
+			case "ASS":
+				score = scores.assigScore;
+				break;
+			case "ATT":
+				score = scores.attenAtndScore;
+				break;
+			case "ETC":
+				score = scores.etcScore;
+				break;
+			case "FIN":
+				score = scores.ftTestScore;
+				break;
+			case "MID":
+				score = scores.prTestScore;
+				break;
+			default:
+				console.error("Unknown evaluation standard code:", item.evlStdrCd);
+				return;
+		}
+		totalScore += score * (item.rate / 100);
+	});
+	return Math.round(totalScore * 10) / 10; // 소수점 첫째자리까지 반올림
 }
 // 4.5 점수 기준으로 성적 변환 함수 (기존 점수를 4.5로 변환)
 function convertToGrade(score) {
-    // 점수를 4.5 기준으로 변환
-    const scoreOn4_5Scale = (score / 100) * 4.5;
-    
-    let grade = '';
-    if (scoreOn4_5Scale >= 4.3) {
-        grade = 'A+';
-    } else if (scoreOn4_5Scale >= 4.0) {
-        grade = 'A';
-    } else if (scoreOn4_5Scale >= 3.7) {
-        grade = 'B+';
-    } else if (scoreOn4_5Scale >= 3.3) {
-        grade = 'B';
-    } else if (scoreOn4_5Scale >= 3.0) {
-        grade = 'C+';
-    } else if (scoreOn4_5Scale >= 2.7) {
-        grade = 'C';
-    } else if (scoreOn4_5Scale >= 2.3) {
-        grade = 'D+';
-    } else if (scoreOn4_5Scale >= 2.0) {
-        grade = 'D';
-    } else {
-        grade = 'F';
-    }
+	// 점수를 4.5 기준으로 변환
+	const scoreOn4_5Scale = (score / 100) * 4.5;
 
-    return grade;
+	let grade = '';
+	if (scoreOn4_5Scale >= 4.3) {
+		grade = 'A+';
+	} else if (scoreOn4_5Scale >= 4.0) {
+		grade = 'A';
+	} else if (scoreOn4_5Scale >= 3.7) {
+		grade = 'B+';
+	} else if (scoreOn4_5Scale >= 3.3) {
+		grade = 'B';
+	} else if (scoreOn4_5Scale >= 3.0) {
+		grade = 'C+';
+	} else if (scoreOn4_5Scale >= 2.7) {
+		grade = 'C';
+	} else if (scoreOn4_5Scale >= 2.3) {
+		grade = 'D+';
+	} else if (scoreOn4_5Scale >= 2.0) {
+		grade = 'D';
+	} else {
+		grade = 'F';
+	}
+
+	return grade;
 }
 
 
 //1인 조회용도
 async function findOne(stu, lec) {
 	const lectNo = document.getElementById("lectNo").value;
-    const testDiv = document.getElementById("testDiv");
-    const findUrl = `${contextPath}/lecture/${lectNo}/dissent/${stu}/${lec}`;
+	const testDiv = document.getElementById("testDiv");
+	const findUrl = `${contextPath}/lecture/${lectNo}/dissent/${stu}/${lec}`;
 
-    console.log(findUrl);
-    var resp = await fetch(findUrl);
-    var pars = await resp.json();
-    console.log(pars);
-    var data = await pars.dissOne;
-    console.log(data);
-    var lesData = await data.lectVO.lesVo;
-    console.log(lesData);
+	console.log(findUrl);
+	var resp = await fetch(findUrl);
+	var pars = await resp.json();
+	console.log(pars);
+	var data = await pars.dissOne;
+	console.log(data);
+	var lesData = await data.lectVO.lesVo;
+	console.log(lesData);
 
-    const totalScore = calculateTotalScore(data.lectVO.lesVo, data.attenVO);
-/**
-   const grade = totalScore >= 90 ? 'A' :
-                  totalScore >= 80 ? 'B' :
-                  totalScore >= 70 ? 'C' :
-                  totalScore >= 60 ? 'D' : 'F';
- */ 
+	const totalScore = calculateTotalScore(data.lectVO.lesVo, data.attenVO);
+	/**
+	   const grade = totalScore >= 90 ? 'A' :
+					  totalScore >= 80 ? 'B' :
+					  totalScore >= 70 ? 'C' :
+					  totalScore >= 60 ? 'D' : 'F';
+	 */
 
- const grade = convertToGrade(totalScore);
-let code = `
+	const grade = convertToGrade(totalScore);
+	let code = `
 <table class="table table-bordered" style="margin-bottom: 1rem; border: 1px solid #d3d3d3;">
     <tr>
         <th colspan="4" style="text-align: center; padding: 0.5rem; vertical-align: middle; background-color: #CFE2FF;">상세 정보</th>
@@ -182,13 +182,13 @@ let code = `
 		   <button type="button" class="btn btn-primary" onclick="updateForm();" id="upBtn">등록</button>
 		</td>   
 	</tr>
-	${data.answerCn? '<input type="hidden" id="doubleCheck" value="doubleCheck"' : ''}
+	${data.answerCn ? '<input type="hidden" id="doubleCheck" value="doubleCheck">' : ''}
 </table>
 `;
 
-selDiv.innerHTML = code;
+	selDiv.innerHTML = code;
 
-    console.log(document.getElementById("selForm")); // 확인용
+	console.log(document.getElementById("selForm")); // 확인용
 }
 
 //선택창 비우기
@@ -197,49 +197,49 @@ function selDivClean() {
 	selDiv.replaceChildren();
 }
 async function updateForm() {
-    const formd = document.getElementById("selForm");
-    const formData = new FormData(formd);
-    const jsonData = {};
+	const formd = document.getElementById("selForm");
+	const formData = new FormData(formd);
+	const jsonData = {};
 	const lectNo = document.getElementById("lectNo").value;
-	
-	const doubleCheck = document.getElementById("doubleCheck").value;
-	
-	if(doubleCheck){
+
+	const doubleCheck = document.getElementById("doubleCheck");
+
+	if (doubleCheck) {
 		swal("수정 실패", "답변이 존재합니다.", "error");
 		return;
 	}
 
 
 
-    formData.forEach((value, key) => {
-        if (key.startsWith("attenVO.")) {
-            const attenKey = key.replace("attenVO.", "");
-            if (!jsonData.attenVO) jsonData.attenVO = {};
-            jsonData.attenVO[attenKey] = value;
-        } else {
-            jsonData[key] = value;
-        }
-    });
+	formData.forEach((value, key) => {
+		if (key.startsWith("attenVO.")) {
+			const attenKey = key.replace("attenVO.", "");
+			if (!jsonData.attenVO) jsonData.attenVO = {};
+			jsonData.attenVO[attenKey] = value;
+		} else {
+			jsonData[key] = value;
+		}
+	});
 
-    try {
-        const upResp = await fetch(`${contextPath}/lecture/${lectNo}/dissent`, {
-            method: "put",
-            headers: { "Content-type": "application/json" },
-            body: JSON.stringify(jsonData),
-        });
+	try {
+		const upResp = await fetch(`${contextPath}/lecture/${lectNo}/dissent`, {
+			method: "put",
+			headers: { "Content-type": "application/json" },
+			body: JSON.stringify(jsonData),
+		});
 
-        const da = await upResp.json();
-        if (upResp.ok) {
-            swal("수정 완료", "이의신청 내용이 성공적으로 수정되었습니다.", "success").then(() => {
-                getDissentList(); // 테이블 업데이트
-            });
-        } else {
-            swal("수정 실패", da.message || "이의신청 수정 중 오류가 발생했습니다.", "error");
-        }
-    } catch (error) {
-        console.error("Error:", error);
-        swal("오류 발생", "네트워크 오류 또는 서버 오류가 발생했습니다.", "error");
-    }
+		const da = await upResp.json();
+		if (upResp.ok) {
+			swal("수정 완료", "이의신청 내용이 성공적으로 수정되었습니다.", "success").then(() => {
+				getDissentList(); // 테이블 업데이트
+			});
+		} else {
+			swal("수정 실패", da.message || "이의신청 수정 중 오류가 발생했습니다.", "error");
+		}
+	} catch (error) {
+		console.error("Error:", error);
+		swal("오류 발생", "네트워크 오류 또는 서버 오류가 발생했습니다.", "error");
+	}
 }
 
 
@@ -250,7 +250,7 @@ async function getDissentList() {
 	var selDiv = document.querySelector("#selDiv")
 	//	var dissentList = await fetch(getDissentListUrl)
 
-//	console.log(dissentList)
+	//	console.log(dissentList)
 	const response = await fetch(getDissentListUrl);
 	const dissentList = await response.json(); // JSON 형태로 변환
 	//console.log(dissentList);
@@ -264,19 +264,19 @@ async function getDissentList() {
     <tr>
                             <td style="text-align: center; padding: 0.5rem; vertical-align: middle;">${diss.studentVO.deptCd}</td>
                             <td style="text-align: center; padding: 0.5rem; vertical-align: middle;">${diss.studentVO.gradeCd}</td>
-                            <td style="text-align: center; padding: 0.5rem; vertical-align: middle;">${diss.personVO.id }</td>
-                            <td style="text-align: center; padding: 0.5rem; vertical-align: middle;">${diss.personVO.nm }</td>
+                            <td style="text-align: center; padding: 0.5rem; vertical-align: middle;">${diss.personVO.id}</td>
+                            <td style="text-align: center; padding: 0.5rem; vertical-align: middle;">${diss.personVO.nm}</td>
                             <td style="text-align: center; padding: 0.5rem; vertical-align: middle;">
                                 <button id="findBtn" class="btn btn-primary btn-sm" 
                                         style="margin: 0; padding: 0.25rem 0.5rem;"
-                                        onclick="findOne('${diss.personVO.id }','${diss.lectVO.lectNo }');">
+                                        onclick="findOne('${diss.personVO.id}','${diss.lectVO.lectNo}');">
                                     상세
                                 </button>
                             </td>
                         </tr>
 `).join("");
 
-tbody.innerHTML = rows;
+	tbody.innerHTML = rows;
 
 	cl = `	
                 <table class="table table-bordered" style="margin-bottom: 1rem; border: 1px solid #d3d3d3;">
@@ -419,9 +419,9 @@ function removeNullProperties(obj) {
 }
 
 
-function insertStr(){
+function insertStr() {
 	const answerCn = document.querySelector("#answerCn")
-	answerCn.value="한 학기동안 고생했습니다."
+	answerCn.value = "한 학기동안 고생했습니다."
 }
 
 
@@ -443,7 +443,7 @@ async function dataTableFunction(sendUrl, parentTable) {
 					{
 						data: 'lectVO.lectNo', title: '강의번호', //조건마다 다른 형태를 표시해야하면 render:function if(T?F?){return <tag>} else{return <tag>}
 						render: function(data, type, row) {
-							if (row.lectVO.lectNo == 'L003') { 
+							if (row.lectVO.lectNo == 'L003') {
 								return `<button class="btn btn-primary" >${row.lectVO.lectNo}</button>`;
 							} else { return `<button class="btn btn-primary" >asdasdasd</button>` }
 						}
@@ -456,8 +456,8 @@ async function dataTableFunction(sendUrl, parentTable) {
 						title: '조회버튼',
 						render: function(data, type, row) {
 							// 버튼 클릭 시 row 데이터 전달
-							return `<button class="btn btn-primary" 
-                                onclick="showDetails('${row.lectVO.lectNo}', '${row.personVO.id}')">조회</button>`;
+							return `<button class="btn btn-primary"
+								onclick="showDetails('${row.lectVO.lectNo}', '${row.personVO.id}')">조회</button>`;
 						}
 					}
 				]
@@ -478,4 +478,4 @@ function showDetails(a, b) {
 
 
 
- */ 
+ */

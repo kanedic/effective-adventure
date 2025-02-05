@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     // 입력필드와 range 슬라이더 값 동기화
     this.value = value;
     tokenRange.value = value;
-});
+	});
 
 });
 
@@ -326,27 +326,21 @@ let fnRemoveUnderProperties = function(obj) {
 	return result;
 };
 
-// TODO 트래픽 설정용 함수(관리자 페이지 이동 필요)
-function bucket() {
-    const second = document.querySelector("#secondDisplay").value;
-    const token = document.querySelector("#tokenDisplay").value;
-    let cp = document.querySelector("#contextPath").value;
-
-    // 값 출력
-    console.log("Second:", second);
-    console.log("Token:", token);
-    console.log("Context Path:", cp);
-    fetch(`${cp}/bucket/${second}/${token}`)
-        .then(resp => resp.json())
-        .then(data => {
-            console.log("Response:", data);
-			swal("성공", "설정이 변경되었습니다.", "success")
-        })
-        .catch(err => {
-            console.error("Error:", err);
-        });
-
-}
+	function bucket() {
+	    const second = document.querySelector("#secondDisplay").value;
+	    const token = document.querySelector("#tokenDisplay").value;
+	    let cp = document.querySelector("#contextPath").value;
+	
+	    fetch(`${cp}/bucket/${second}/${token}`)
+	        .then(resp => resp.json())
+	        .then(data => {
+	            console.log("Response:", data);
+				swal("성공", "설정이 변경되었습니다.", "success")
+	        })
+	        .catch(err => {
+	            console.error("Error:", err);
+	        });
+	}
 
 
 function bucket2() {

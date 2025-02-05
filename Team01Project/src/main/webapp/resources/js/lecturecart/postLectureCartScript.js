@@ -65,7 +65,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 					classes: {
 						header: 'fw-bold',  // 헤더 텍스트 굵게
 						sInfo: 'text-primary mb-2', // 정보 텍스트 스타일
-						sPageButton: 'btn btn-outline-primary' // 페이지네이션 버튼 스타일
 					},
 					rowCallback: function(row, data) {
 						$(row).addClass('text-center align-middle'); // 행 내용 수직 중앙 정렬

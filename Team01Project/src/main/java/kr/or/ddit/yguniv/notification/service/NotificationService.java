@@ -45,7 +45,7 @@ public class NotificationService {
 				Map<String, Object> data = new HashMap<>();
 				List<NotificationVO> notiList = dao.selectNotificationList(userId);
 				List<NotificationVO> moduleList = dao.selectModuleNotificationList(userId);
-				log.info("{}", notiList);
+				//log.info("{}", notiList);
 				data.put("message", message);
 				data.put("timestamp", System.currentTimeMillis());
 				data.put("list", notiList);
@@ -64,7 +64,7 @@ public class NotificationService {
 				Map<String, Object> data = new HashMap<>();
 				NotificationVO notiOne = dao.selectNotification(userId,notiNo);
 				List<NotificationVO> moduleList = dao.selectModuleNotificationList(userId);
-				log.info("{}", notiOne);
+				//log.info("{}", notiOne);
 				data.put("message", message);
 				data.put("timestamp", System.currentTimeMillis());
 				data.put("moduleList", moduleList);
@@ -79,10 +79,9 @@ public class NotificationService {
 	// 새로운 알림 생성 및 전송
 	public void createAndSendNotification(String sendId, List<String> recdIdList, 
 										  String message, String notiCd, String url,String head) {
-		// 1. 새 알림 생성
+		// 새 알림 VO 생성
+		NotificationVO newNotification = new NotificationVO();
 		for (String recdId : recdIdList) {
-
-			NotificationVO newNotification = new NotificationVO();
 			newNotification.setRecpId(recdId);
 			newNotification.setSendId(sendId);
 			newNotification.setNotiCn(message);
@@ -96,7 +95,7 @@ public class NotificationService {
 		        int newNotiNo = newNotification.getNotiNo();
 		        if (newNotiNo > 0) {
 		        	sendOneNotification(recdId, "새로운 알림이 도착했습니다. 알림 번호: " + newNotiNo,newNotiNo);
-		            log.info("○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○ notiNo 값{}",newNotiNo);
+		            //log.info("○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○ notiNo 값{}",newNotiNo);
 		        }
 			}
 		}

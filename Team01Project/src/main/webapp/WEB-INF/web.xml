@@ -79,17 +79,15 @@
 	</filter-mapping>
 	
   <!-- 에러페이지 설정 -->
-  
-   
   <error-page>
     <error-code>404</error-code>
     <location>/WEB-INF/views/customError/error404.jsp</location>
 	</error-page>
 
-<error-page>
-    <error-code>429</error-code>
-    <location>/WEB-INF/views/customError/error429.jsp</location>
-</error-page>
+	<error-page>
+	    <error-code>429</error-code>
+	    <location>/WEB-INF/views/customError/error429.jsp</location>
+	</error-page>
 
  <error-page>
       <error-code>500</error-code>

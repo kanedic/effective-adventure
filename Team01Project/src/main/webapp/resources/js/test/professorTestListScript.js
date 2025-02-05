@@ -2,24 +2,28 @@
  * 
  */
 
-// null 값을 제거하는 재귀 함수
+// 객체에서 null 값을 제거하는 재귀 함수
 function removeNullProperties(obj) {
+	// 입력된 값이 객체가 아니거나 null이면 그대로 반환 (기본 자료형 처리)
 	if (typeof obj !== 'object' || obj === null) {
-		return obj; // 객체가 아니거나 null인 경우 그대로 반환
+		return obj;
 	}
 
-	// 객체를 복제하면서 null이 아닌 값만 유지
+	// 입력이 배열인 경우: 각 요소에 대해 재귀적으로 처리 후, null이 아닌 값만 필터링하여 반환
 	if (Array.isArray(obj)) {
-		return obj.map(item => removeNullProperties(item)).filter(item => item !== null);
+		return obj
+			.map(item => removeNullProperties(item)) // 각 요소에 대해 재귀 호출
+			.filter(item => item !== null); // null이 아닌 요소만 유지
 	}
 
+	// 입력이 일반 객체인 경우: 새로운 객체를 생성하여 null이 아닌 속성만 유지
 	const result = {};
 	for (const key in obj) {
 		if (obj[key] !== null) {
-			result[key] = removeNullProperties(obj[key]);
+			result[key] = removeNullProperties(obj[key]); // 속성 값에 대해 재귀 호출
 		}
 	}
-	return result;
+	return result; // null이 제거된 객체 반환
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -42,6 +46,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 		const data = await response.json();
 		const boxElement = document.getElementById('box');
 
+		console.log(data.professorTestList)
 		console.log(removeNullProperties(data.professorTestList))
 
 		if (!data.professorTestList || data.professorTestList.length === 0) {

@@ -86,21 +86,20 @@
 		<property name="paramName" value="lang" />
 	</bean>
 	
-	<bean class="kr.or.ddit.yguniv.bucket.BucketInterceptor" id="bucketInterceptor">
-		<constructor-arg ref="bucket" name="bucket"></constructor-arg>
-	</bean>
 	
 	<bean class="org.springframework.web.servlet.i18n.CookieLocaleResolver" id="localeResolver"></bean>
 
 	<bean class="kr.or.ddit.yguniv.interceptor.ControllerInterceptor" id="controllerInterceptor">
-	
 		<constructor-arg ref="logServiceImpl" name="service"></constructor-arg>
 	</bean>
 	
+	<bean class="kr.or.ddit.yguniv.bucket.BucketInterceptor" id="bucketInterceptor">
+		<constructor-arg ref="bucket" name="bucket"></constructor-arg>
+	</bean>
 	<mvc:interceptors>
 		<mvc:interceptor>
 <!-- 			<mvc:mapping path="/lectureCart/**"/> -->
-<!-- path의 단위는 url를 기준으로 함. ↑는 lectureCart로 시작하는 모든 경로 ↓는 /lectureCart/pre 에 대한 요청만  -->
+<!-- path의 단위는 url를 기준으로 함. ↑는 lectureCart로 시작하는 모든 경로 ↓는 /lectureCart/pre(페이지 이동)에 대한 요청만  -->
 			<mvc:mapping path="/lectureCart/pre"/>
 			<ref bean="bucketInterceptor"/>
 		</mvc:interceptor>

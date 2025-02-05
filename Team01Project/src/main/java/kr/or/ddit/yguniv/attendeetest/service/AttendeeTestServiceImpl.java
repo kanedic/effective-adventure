@@ -147,26 +147,19 @@ public class AttendeeTestServiceImpl implements AttendeeTestService {
 	public Integer createRecord(String testNo, String stuId) {
 
 		TestVO testVo = dao.getTestOne(testNo);
-
 		String reqTime = systemTimeNow();
-
-		// 응시기록을 만들려면 서버시간이 시험 시간의 사이에 있어야함.
-//		Integer recordCheck = 0;
-		Integer create = 0;
-		String result = "";
-
 		String sysDate = systemDateNow();
+		// 응시기록을 만들려면 서버시간이 시험 시간의 사이에 있어야함.
+		Integer create = 0;
 		
 		boolean dateCheck = dateChecker(testVo, sysDate);
 		if(!dateCheck) {
 			throw new TestScheduleException("시험 일자가 아닙니다.");
 		}
-		
 		boolean timeCheck = timeChecker(testVo, reqTime);
 		if(!timeCheck) {
 			throw new TestScheduleException("시험 시간이 아닙니다.");
 		}
-		//boolean인지 integer인지 체크하기
 		boolean recordCheck = checkRecord(testNo, stuId);
 		if(!recordCheck) {
 			throw new TestScheduleException("응시 기록이 존재 합니다.");
@@ -175,19 +168,14 @@ public class AttendeeTestServiceImpl implements AttendeeTestService {
 		String lectNo = testVo.getLectNo();
 		create = dao.createRecord(testNo, stuId, lectNo);
 		
-		//날짜체크 추가하기
+		if(create == null) {
+			throw new TestScheduleException("응시 실패. 문의가 필요합니다.");			
+		}
 		
 		return create;
 	}
 
-	
-	@Override
-	public boolean checkRecord(String testNo, String stuId) {
-	    String lectNo = dao.checkRecord(testNo, stuId);
-	    // lectNo가 null일 경우 true 반환
-	    return lectNo == null || lectNo.isEmpty();
-	}
-	
+
 
 	public String systemTimeNow() {
 		LocalDateTime dateTime = LocalDateTime.now();
@@ -201,9 +189,7 @@ public class AttendeeTestServiceImpl implements AttendeeTestService {
 	
 	public String systemDateNow() {
 		LocalDateTime dateTime = LocalDateTime.now();
-		// 포맷 정의 (HHmm 형식)
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-		// 시간 부분만 포맷하여 문자열로 변환
 		String date = dateTime.format(formatter);
 		
 		return date;
@@ -235,6 +221,18 @@ public class AttendeeTestServiceImpl implements AttendeeTestService {
 
 		return tf;
 	}
+	
+	@Override
+	public boolean checkRecord(String testNo, String stuId) {
+	    String lectNo = dao.checkRecord(testNo, stuId);
+	    boolean tf = true;
+	    // lectNo가 null일 경우 true 반환
+	    if(lectNo != null) {
+	    	tf=false;
+	    }
+	    return tf;
+	}
+	
 
 //	@Transactional
 //	@Override

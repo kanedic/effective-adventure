@@ -215,7 +215,7 @@ SELECT
 				left outer join education_time_table_code ettc on ettc.edc_time_cd = sc.edc_time_cd
 				left outer join class_room cr on sc.croom_cd = cr.croom_cd
     WHERE 
-         l.lect_no='L018'
+         l.lect_no=#{lectNo}
 GROUP BY
     l.lect_no
     , l.profe_id

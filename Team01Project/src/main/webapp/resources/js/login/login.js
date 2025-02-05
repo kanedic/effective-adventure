@@ -1,9 +1,12 @@
 document.addEventListener("DOMContentLoaded", function(){
 	 
 	 if (exception.value) { // 로그인 오류 발생시 동작
-	
-  
-	//swal 닷메 
+		swal({
+			title: "휴면계정",
+			text: "휴면 상태로 변환된 계정입니다.",
+			icon: "error",
+			button: "확인"
+		});
 	
 	}
 });
